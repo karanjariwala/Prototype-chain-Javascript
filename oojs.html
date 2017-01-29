@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript example</title>
+</head>
+
+<body>
+    <div>
+        <label for="jscode">Enter code:</label>
+        <input type="text" id="jscode">
+        <button>Submit code</button>
+    </div>
+    <p></p>
+</body>
+<script>
+// your code 
+
+var input = document.querySelector('input');
+var btn = document.querySelector('button');
+var para = document.querySelector('p');
+
+function Person(first, last, age, gender, interests) {
+    this.name = {
+        first,
+        last
+    };
+    this.age = age;
+    this.gender = gender;
+    this.interests = interests;
+    this.bio = function() {
+        if (this.gender == 'male' || this.gender == 'Male')
+
+            alert(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. He likes ' + getInterests(this.interests) + '.')
+        else if (this.gender == 'female' || this.gender == 'Female')
+            alert(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. she likes ' + getInterests(this.interests) + '.')
+
+    };
+    this.greeting = function() {
+        alert('Hi! I\'m ' + this.name.first + '.');
+    };
+
+    function getInterests(interests) {
+        var interestsS = '';
+        for (i = 0; i < interests.length - 1; i++)
+            interestsS += interests[i] + ' , ';
+        interestsS += ' and ' + interests[interests.length - 1];
+        return interestsS
+    };
+};
+
+
+btn.onclick = function() {
+    var code = input.value;
+    para.textContent = eval(code);
+};
+
+var person1 = new Person('Bob', 'Smith', 32, 'female', ['music', 'skiing', 'dancing']);
+
+
+Person.prototype.farewell = function() {
+    alert(this.name.first + ' has left for now! ');
+}
+
+Person.prototype.farewell1 = function() {
+    alert(this.name.first + ' has left for now! ');
+}
+
+// console.log(Object.keys(person1));
+console.log(Object.getPrototypeOf(Object.keys(person1))); // Object. keys creates a new array of properties that the person1 object has.
+console.log(Object.prototype.isPrototypeOf(Array.prototype)); // since array is linked to object in the prototype chain
+
+for( let i in person1){     // This is a logic to get all the properties of the abject in first if
+     if(person1.hasOwnProperty(i)){
+         console.log(i)
+     }
+     if(!person1.hasOwnProperty(i)){// This is a logic to get all the properties of the abject in it's prototype chain 
+         console.log(i)
+     }
+ }
+
+</script>
+
+</html>
