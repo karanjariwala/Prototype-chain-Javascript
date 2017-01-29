@@ -74,10 +74,9 @@ console.log(Object.prototype.isPrototypeOf(Array.prototype)); // since array is 
 for( let i in person1){     // This is a logic to get all the properties of the abject in first if
      if(person1.hasOwnProperty(i)){
          console.log(i)
-     }
-     if(!person1.hasOwnProperty(i)){// This is a logic to get all the properties of the abject in it's prototype chain 
-         console.log(i)
-     }
+     };
+     if(!person1.hasOwnProperty(i)){// This is a logic to get all the properties of the abject in it's prototype chain console.log(i)
+     };
  }
 
 </script>
