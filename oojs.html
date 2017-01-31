@@ -29,25 +29,26 @@ function Person(first, last, age, gender, interests) {
     this.age = age;
     this.gender = gender;
     this.interests = interests;
-    this.bio = function() {
-        if (this.gender == 'male' || this.gender == 'Male')
 
-            alert(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. He likes ' + getInterests(this.interests) + '.')
-        else if (this.gender == 'female' || this.gender == 'Female')
-            alert(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. she likes ' + getInterests(this.interests) + '.')
+};
+Person.prototype.bio = function() {
+    if (this.gender == 'male' || this.gender == 'Male')
 
-    };
-    this.greeting = function() {
-        alert('Hi! I\'m ' + this.name.first + '.');
-    };
+        alert(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. He likes ' + this.getInterests(this.interests) + '.')
+    else if (this.gender == 'female' || this.gender == 'Female')
+        alert(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. she likes ' + this.getInterests(this.interests) + '.')
 
-    function getInterests(interests) {
-        var interestsS = '';
-        for (i = 0; i < interests.length - 1; i++)
-            interestsS += interests[i] + ' , ';
-        interestsS += ' and ' + interests[interests.length - 1];
-        return interestsS
-    };
+};
+Person.prototype.greeting = function() {
+    alert('Hi! I\'m ' + this.name.first + '.');
+};
+
+Person.prototype.getInterests = function(interests) {
+    var interestsS = '';
+    for (i = 0; i < interests.length - 1; i++)
+        interestsS += interests[i] + ' , ';
+    interestsS += ' and ' + interests[interests.length - 1];
+    return interestsS
 };
 
 
@@ -71,13 +72,51 @@ Person.prototype.farewell1 = function() {
 console.log(Object.getPrototypeOf(Object.keys(person1))); // Object. keys creates a new array of properties that the person1 object has.
 console.log(Object.prototype.isPrototypeOf(Array.prototype)); // since array is linked to object in the prototype chain
 
-for( let i in person1){     // This is a logic to get all the properties of the abject in first if
-     if(person1.hasOwnProperty(i)){
-         console.log(i)
-     };
-     if(!person1.hasOwnProperty(i)){// This is a logic to get all the properties of the abject in it's prototype chain console.log(i)
-     };
- }
+for (let i in person1) { // This is a logic to get all the properties of the abject in first if
+    if (person1.hasOwnProperty(i)) {
+        console.log(i)
+    };
+    if (!person1.hasOwnProperty(i)) { // This is a logic to get all the properties of the abject in it's prototype chain console.log(i)
+    };
+}
+
+function Teacher(first, last, age, gender, interests, subjects) {
+    Person.call(this, first, last, age, gender, interests);
+    this.subjects = subjects;
+
+}
+Teacher.prototype = Object.create(Person.prototype);
+// Here our friend create() comes to the rescue again — in this case we are using it to create a new object based on the value of the object refered by Person.prototype. (The Person() constructor's prototype object.) We then set this new object to be the value of Teacher.prototype. This means that Teacher.prototype will now inherit all the methods available on Person.prototype.
+
+Teacher.prototype.constructor = Teacher; //Since Teacher's Prototype's constructor is Person. We have to change this to Teacher. 
+Teacher.prototype.greeting = function() {
+    var prefix;
+
+    if (this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M') {
+        prefix = 'Mr.';
+    } else if (this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+        prefix = 'Mrs.';
+    } else {
+        prefix = 'Mx.';
+    }
+
+    alert('Hello. My name is ' + prefix + ' ' + this.name.last + ', and I teach ' + this.subjects + '.');
+};
+var teacher1 = new Teacher('Dave', 'Griffiths', 31, 'male', ['football', 'cookery'], 'mathematics');
+
+function Student(first,last,age,gender,interests)
+{
+    Person.call(this,first,last,age,gender,interests);
+
+}
+Student.prototype= Object.create(Person.prototype);
+Student.prototype.constructor=Student;
+Student.prototype.greeting = function()
+{
+    alert('yo! my name is '+this.name.first);
+};
+var student1 = new Student('Liz', 'Sheppard', 17, 'female', ['ninjitsu', 'air cadets']);
+
 
 </script>
 
